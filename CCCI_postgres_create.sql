@@ -52,7 +52,7 @@ CREATE TABLE "Fala" (
 	"FK_Idioma_nome" character varying(20) NOT NULL,
 	"FK_Aluno_matricula" integer NOT NULL,
 	"proeficiencia" integer NOT NULL,
-	"certificado" character varying(60) NOT NULL,
+	"certificado" character varying(60),
 	CONSTRAINT Fala_pk PRIMARY KEY ("FK_Idioma_nome","FK_Aluno_matricula")
 ) WITH (
   OIDS=FALSE
