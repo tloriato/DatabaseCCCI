@@ -1,4 +1,4 @@
-CREATE TABLE "Aluno" (
+CREATE TABLE "aluno" (
 	"nome" character varying(70) NOT NULL,
 	"docEmissor" character varying(60) NOT NULL,
 	"docNumero" character varying(20) NOT NULL,
@@ -28,97 +28,97 @@ CREATE TABLE "Aluno" (
 	"enderecoLogradouro" character varying(70) NOT NULL,
 	"enderecoNumero" integer NOT NULL,
 	"enderecoComplemento" character varying(20),
-	CONSTRAINT Aluno_pk PRIMARY KEY ("matricula")
+	CONSTRAINT aluno_pk PRIMARY KEY ("matricula")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Universidade" (
+CREATE TABLE "universidade" (
 	"nome" character varying(40) NOT NULL,
 	"sigla" character varying(7) NOT NULL,
 	"estado" character varying(40) NOT NULL,
 	"pais" character varying(3) NOT NULL,
 	"FK_Professor_matricula" integer NOT NULL,
-	CONSTRAINT Universidade_pk PRIMARY KEY ("sigla","estado","pais")
+	CONSTRAINT universidade_pk PRIMARY KEY ("sigla","estado","pais")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Fala" (
+CREATE TABLE "fala" (
 	"FK_Idioma_nome" character varying(20) NOT NULL,
 	"FK_Aluno_matricula" integer NOT NULL,
 	"proeficiencia" integer NOT NULL,
 	"certificado" character varying(60),
-	CONSTRAINT Fala_pk PRIMARY KEY ("FK_Idioma_nome","FK_Aluno_matricula")
+	CONSTRAINT fala_pk PRIMARY KEY ("FK_Idioma_nome","FK_Aluno_matricula")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Disciplina" (
+CREATE TABLE "discilpina" (
 	"codigo" integer NOT NULL,
 	"nome" character varying(20) NOT NULL,
 	"creditos" integer NOT NULL,
 	"FK_Departamento_sigla" character varying(7) NOT NULL,
-	CONSTRAINT Disciplina_pk PRIMARY KEY ("codigo","FK_Departamento_sigla")
+	CONSTRAINT discilpina_pk PRIMARY KEY ("codigo","FK_Departamento_sigla")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Curso" (
+CREATE TABLE "curso" (
 	"sigla" character varying(7) NOT NULL,
 	"nome" character varying(30) NOT NULL,
 	"FK_Departamento_sigla" character varying(7) NOT NULL,
-	CONSTRAINT Curso_pk PRIMARY KEY ("sigla")
+	CONSTRAINT curso_pk PRIMARY KEY ("sigla")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Departamento" (
+CREATE TABLE "departamento" (
 	"sigla" character varying(7) NOT NULL,
 	"nome" character varying(40) NOT NULL,
-	CONSTRAINT Departamento_pk PRIMARY KEY ("sigla")
+	CONSTRAINT departamento_pk PRIMARY KEY ("sigla")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Professor" (
+CREATE TABLE "professor" (
 	"nome" character varying(50) NOT NULL,
 	"matricula" integer NOT NULL,
 	"FK_Departamento_sigla" character varying(7) NOT NULL,
-	CONSTRAINT Professor_pk PRIMARY KEY ("matricula")
+	CONSTRAINT professor_pk PRIMARY KEY ("matricula")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Turma" (
+CREATE TABLE "turma" (
 	"turma" character varying(7) NOT NULL,
 	"periodo" integer NOT NULL,
 	"FK_Professor_matricula" integer NOT NULL,
 	"FK_Disciplina_codigo" integer(8) NOT NULL,
 	"FK_Departamento_Sigla" character varying(7) NOT NULL,
 	"FK_Aluno_matricula" integer NOT NULL,
-	CONSTRAINT Turma_pk PRIMARY KEY ("turma","periodo","FK_Professor_matricula","FK_Disciplina_codigo","FK_Departamento_Sigla","FK_Aluno_matricula")
+	CONSTRAINT turma_pk PRIMARY KEY ("turma","periodo","FK_Professor_matricula","FK_Disciplina_codigo","FK_Departamento_Sigla","FK_Aluno_matricula")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Contato" (
+CREATE TABLE "contato" (
 	"nome" character varying(70) NOT NULL,
 	"email" character varying(60) NOT NULL,
 	"sexo" char NOT NULL,
@@ -132,58 +132,56 @@ CREATE TABLE "Contato" (
 	"enderecoComplemento" character varying(20),
 	"parentesco" character varying(20) NOT NULL,
 	"FK_Aluno_matricula" integer NOT NULL,
-	CONSTRAINT Contato_pk PRIMARY KEY ("FK_Aluno_matricula")
+	CONSTRAINT contato_pk PRIMARY KEY ("FK_Aluno_matricula")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Curriculo" (
+CREATE TABLE "curriculo" (
 	"FK_Discipla_codigo" integer NOT NULL,
 	"FK_Departamento_sigla" varchar(7) NOT NULL,
 	"FK_Curso_sigla" varchar(7) NOT NULL,
-	CONSTRAINT Curriculo_pk PRIMARY KEY ("FK_Discipla_codigo","FK_Departamento_sigla","FK_Curso_sigla")
+	CONSTRAINT curriculo_pk PRIMARY KEY ("FK_Discipla_codigo","FK_Departamento_sigla","FK_Curso_sigla")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-CREATE TABLE "Idioma" (
+CREATE TABLE "idioma" (
 	"nome" varchar(20) NOT NULL,
-	CONSTRAINT Idioma_pk PRIMARY KEY ("nome")
+	CONSTRAINT idioma_pk PRIMARY KEY ("nome")
 ) WITH (
   OIDS=FALSE
 );
 
 
 
-ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_fk0" FOREIGN KEY ("FK_Universidade_estado") REFERENCES "Universidade"("estado");
-ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_fk1" FOREIGN KEY ("FK_Universidade_sigla") REFERENCES "Universidade"("estado");
-ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_fk2" FOREIGN KEY ("FK_Universidade_pais") REFERENCES "Universidade"("pais");
-ALTER TABLE "Aluno" ADD CONSTRAINT "Aluno_fk3" FOREIGN KEY ("FK_Curso_sigla") REFERENCES "Curso"("sigla");
+ALTER TABLE "aluno" ADD CONSTRAINT "aluno_fk0" FOREIGN KEY ("FK_Universidade_estado") REFERENCES "universidade"("estado");
+ALTER TABLE "aluno" ADD CONSTRAINT "aluno_fk1" FOREIGN KEY ("FK_Universidade_sigla") REFERENCES "universidade"("estado");
+ALTER TABLE "aluno" ADD CONSTRAINT "aluno_fk2" FOREIGN KEY ("FK_Universidade_pais") REFERENCES "universidade"("pais");
+ALTER TABLE "aluno" ADD CONSTRAINT "aluno_fk3" FOREIGN KEY ("FK_Curso_sigla") REFERENCES "curso"("sigla");
 
-ALTER TABLE "Universidade" ADD CONSTRAINT "Universidade_fk0" FOREIGN KEY ("FK_Professor_matricula") REFERENCES "Professor"("matricula");
+ALTER TABLE "universidade" ADD CONSTRAINT "universidade_fk0" FOREIGN KEY ("FK_Professor_matricula") REFERENCES "professor"("matricula");
 
-ALTER TABLE "Fala" ADD CONSTRAINT "Fala_fk0" FOREIGN KEY ("FK_Idioma_nome") REFERENCES "Idioma"("nome");
-ALTER TABLE "Fala" ADD CONSTRAINT "Fala_fk1" FOREIGN KEY ("FK_Aluno_matricula") REFERENCES "Aluno"("matricula");
-
-
-ALTER TABLE "Curso" ADD CONSTRAINT "Curso_fk0" FOREIGN KEY ("FK_Departamento_sigla") REFERENCES "Departamento"("sigla");
+ALTER TABLE "fala" ADD CONSTRAINT "fala_fk0" FOREIGN KEY ("FK_Idioma_nome") REFERENCES "idioma"("nome");
+ALTER TABLE "fala" ADD CONSTRAINT "fala_fk1" FOREIGN KEY ("FK_Aluno_matricula") REFERENCES "aluno"("matricula");
 
 
-ALTER TABLE "Professor" ADD CONSTRAINT "Professor_fk0" FOREIGN KEY ("FK_Departamento_sigla") REFERENCES "Departamento"("sigla");
-
-ALTER TABLE "Turma" ADD CONSTRAINT "Turma_fk0" FOREIGN KEY ("FK_Professor_matricula") REFERENCES "Professor"("matricula");
-ALTER TABLE "Turma" ADD CONSTRAINT "Turma_fk1" FOREIGN KEY ("FK_Disciplina_codigo") REFERENCES "Disciplina"("codigo");
-ALTER TABLE "Turma" ADD CONSTRAINT "Turma_fk2" FOREIGN KEY ("FK_Departamento_Sigla") REFERENCES "Departamento"("sigla");
-ALTER TABLE "Turma" ADD CONSTRAINT "Turma_fk3" FOREIGN KEY ("FK_Aluno_matricula") REFERENCES "Aluno"("matricula");
-
-ALTER TABLE "Contato" ADD CONSTRAINT "Contato_fk0" FOREIGN KEY ("FK_Aluno_matricula") REFERENCES "Aluno"("matricula");
-
-ALTER TABLE "Curriculo" ADD CONSTRAINT "Curriculo_fk0" FOREIGN KEY ("FK_Discipla_codigo") REFERENCES "Disciplina"("codigo");
-ALTER TABLE "Curriculo" ADD CONSTRAINT "Curriculo_fk1" FOREIGN KEY ("FK_Departamento_sigla") REFERENCES "Departamento"("sigla");
-ALTER TABLE "Curriculo" ADD CONSTRAINT "Curriculo_fk2" FOREIGN KEY ("FK_Curso_sigla") REFERENCES "Curso"("sigla");
+ALTER TABLE "curso" ADD CONSTRAINT "curso_fk0" FOREIGN KEY ("FK_Departamento_sigla") REFERENCES "departamento"("sigla");
 
 
+ALTER TABLE "professor" ADD CONSTRAINT "professor_fk0" FOREIGN KEY ("FK_Departamento_sigla") REFERENCES "departamento"("sigla");
+
+ALTER TABLE "turma" ADD CONSTRAINT "turma_fk0" FOREIGN KEY ("FK_Professor_matricula") REFERENCES "professor"("matricula");
+ALTER TABLE "turma" ADD CONSTRAINT "turma_fk1" FOREIGN KEY ("FK_Disciplina_codigo") REFERENCES "discilpina"("codigo");
+ALTER TABLE "turma" ADD CONSTRAINT "turma_fk2" FOREIGN KEY ("FK_Departamento_Sigla") REFERENCES "departamento"("sigla");
+ALTER TABLE "turma" ADD CONSTRAINT "turma_fk3" FOREIGN KEY ("FK_Aluno_matricula") REFERENCES "aluno"("matricula");
+
+ALTER TABLE "contato" ADD CONSTRAINT "contato_fk0" FOREIGN KEY ("FK_Aluno_matricula") REFERENCES "aluno"("matricula");
+
+ALTER TABLE "curriculo" ADD CONSTRAINT "curriculo_fk0" FOREIGN KEY ("FK_Discipla_codigo") REFERENCES "discilpina"("codigo");
+ALTER TABLE "curriculo" ADD CONSTRAINT "curriculo_fk1" FOREIGN KEY ("FK_Departamento_sigla") REFERENCES "departamento"("sigla");
+ALTER TABLE "curriculo" ADD CONSTRAINT "curriculo_fk2" FOREIGN KEY ("FK_Curso_sigla") REFERENCES "curso"("sigla");
